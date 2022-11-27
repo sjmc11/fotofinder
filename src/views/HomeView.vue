@@ -41,12 +41,14 @@
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === 1}" @click="handlePageUpdate(pagination.page - 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">←</button>
             <!-- first -->
             <button type="button" v-if="pagination.page > 5" @click="handlePageUpdate(1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
-            <!-- dynamic range -->
-            <button v-for="p in computedPagination" type="button" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : p === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">{{p.toLocaleString()}}</button>
+            <!-- dynamic page buttons -->
+            <template v-for="p in Number(totalPageCount)">
+              <button type="button" v-if="p > (pagination.page - 5) && p < (pagination.page + 5)" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : Number(p) === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">{{p.toLocaleString()}}</button>
+            </template>
             <!-- last -->
-            <button type="button" v-if="pagination.page !== totalPageCount" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
+            <button type="button" v-if="pagination.page < (totalPageCount - 5)" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
             <!-- next -->
-            <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === totalPageCount}" @click="handlePageUpdate(pagination.page + 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">→</button>
+            <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === Number(totalPageCount)}" @click="handlePageUpdate(pagination.page + 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">→</button>
           </div><!-- end pagination -->
         </template>
       </template>
@@ -99,7 +101,7 @@ export default {
   methods: {
     // Handle pagination change
     handlePageUpdate (pageNum) {
-      this.pagination.page = pageNum
+      this.pagination.page = Number(pageNum)
       this.fetchPhotos()
     },
     // Handle filter change: per-page, search.
@@ -133,7 +135,7 @@ export default {
           this.photoListAxios = false
         })
         .catch((err) => {
-          this.photoListErr = err
+          // this.photoListErr = err
           this.photoListAxios = false
           console.error(err)
         })
@@ -193,22 +195,7 @@ export default {
       }
     },
     totalPageCount () {
-      return Number(this.pagination.total_results / this.pagination.per_page).toFixed()
-    },
-    computedPagination () {
-      // Quick & dirty pagination that return pages within x either side of current page
-      const pagesToSide = 4 // How many pages to show either side
-      // Calculate start page
-      const pageRangeStart = this.pagination.page <= pagesToSide ? 1 : (this.pagination.page - pagesToSide)
-      // Calculate end page
-      let pageRangeEnd = pageRangeStart + (pagesToSide * 2)
-      if (this.pagination.page <= (pagesToSide)) pageRangeEnd = pageRangeEnd - 1
-      // Create array from nums
-      const pageNums = []
-      for (let i = pageRangeStart; i <= pageRangeEnd; i++) {
-        pageNums.push(i)
-      }
-      return pageNums
+      return Math.ceil(this.pagination.total_results / this.pagination.per_page).toFixed()
     }
   }
 }

@@ -20,7 +20,7 @@ Enjoyed working on this, was cool little hackathon project for a Sunday. Thanks 
 
 - Ideally would add an error handler to all axios requests, if authentication failure wipe the client_id value & kick to auth page.
 
-- Ideally use a separate component for pagination that utilised prop/emits
+- Ideally use a separate component for pagination that utilised prop/emits - currently implemented a bit of a hacky basic pagination that could be improved & refined.
 
 - Search function added to PhotoService http handler
 
