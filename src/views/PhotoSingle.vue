@@ -1,5 +1,5 @@
 <template lang="html">
-    <div id="photo-view" class="container">
+    <div id="photo-view" class="container fadeInDown">
       <!-- Loading -->
       <template v-if="doingAxios">
         <div class="loader text-center">
@@ -8,7 +8,7 @@
         </div><!-- end loader -->
       </template>
       <!-- Error -->
-      <div v-else-if="photoErr" class="bg-zinc-800/50 p-5 rounded-md flex items-center">
+      <div v-else-if="photoErr" class="bg-zinc-800/50 p-5 rounded-md flex items-center fadeInDown">
         <span class="text-xl mr-6">👎️</span>
         <div class="err-info">
           <h6 class="font-bold block mb-1">Could not load photo ID: {{$route.params.id}}</h6>

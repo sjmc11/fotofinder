@@ -1,15 +1,17 @@
 <template>
-    <div id="app" class="pb-12">
+    <div id="app" class="pb-12 relative">
         <AppHeader/>
         <router-view></router-view>
+        <BackgroundBlobs/>
     </div>
 </template>
 
 <script>
 import AppHeader from '@/components/layout/AppHeader'
+import BackgroundBlobs from '@/components/layout/BackgroundBlobs'
 export default {
   name: 'app',
-  components: { AppHeader },
+  components: { BackgroundBlobs, AppHeader },
   mounted () {
     // No longer needed - taken care of in router logic.
     // if (!this.$root.client_id) {

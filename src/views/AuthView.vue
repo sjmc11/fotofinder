@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="auth-view w-full py-24 flex flex-col justify-center items-center">
+    <div class="auth-view w-full py-24 flex flex-col justify-center items-center fadeInDown">
       <div id="page-heading" class="block mb-6 xl:mb-9 text-center">
         <h1 class="text-xl sm:text-3xl mb-4">{{this.$root.client_id ? 'Re-authorize' : 'Authorize'}} your profile to fetch images</h1>
         <p class="font-light opacity-50 sm:text-lg">Enter your unsplash API key</p>

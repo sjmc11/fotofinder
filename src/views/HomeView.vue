@@ -1,10 +1,10 @@
 <template lang="html">
-    <div id="home-view" class="container">
+    <div id="home-view" class="container fadeInDown">
       <!-- Page heading -->
       <PageHeading :title="isFavourites ? 'Favourite photos' : 'Photos'" :subTitle="computedSubtitle">
         <template v-if="!isFavourites">
-          <input type="search" v-model="searchTerm" @change="handleFilter" placeholder="Search photos" class="ml-3 lg:ml-5 border border-zinc-700 bg-zinc-800/50 rounded-md w-80 h-9 px-4 text-xs focus:outline-none">
-          <div id="per-page" class="inline-flex items-center ml-3 border border-zinc-700 bg-zinc-800/50 rounded-md text-xs h-9 relative">
+          <input type="search" v-model="searchTerm" @change="handleFilter" placeholder="Search photos" class="ml-3 lg:ml-5 border border-zinc-700 bg-zinc-800/50 rounded-md w-80 h-9 px-4 text-xs focus:outline-none fadeInDown">
+          <div id="per-page" class="inline-flex items-center ml-3 border border-zinc-700 bg-zinc-800/50 rounded-md text-xs h-9 relative fadeInDown">
             <span class="inline-block px-3 opacity-50">Per page</span>
             <select @change="handleFilter" v-model="pagination.per_page" class="px-3 appearance-none w-20 h-9 border-l border-zinc-700 focus:outline-none bg-transparent">
               <option>10</option>
@@ -19,7 +19,7 @@
       <!-- Loader -->
       <Loader v-if="photoListAxios && !computedPhotoList.length"/>
       <!-- Error -->
-      <div v-else-if="photoListErr" class="bg-zinc-800/50 p-5 rounded-md flex items-center">
+      <div v-else-if="photoListErr" class="bg-zinc-800/50 p-5 rounded-md flex items-center fadeInDown">
         <span class="text-xl mr-6">👎️</span>
         <div class="err-info">
           <h6 class="font-bold block mb-1">Could not load photos</h6>
