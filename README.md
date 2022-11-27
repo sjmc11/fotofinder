@@ -24,4 +24,6 @@ Enjoyed working on this, was cool little hackathon project for a Sunday. Thanks 
 
 - Search function added to PhotoService http handler
 
+- Did not create a stand-alone search view. Instead, I extended the home view to support searching as well as favourites as I felt this was a better end result ux.
+
 - Sure I'm forgetting plenty, be happy to walk-through and discuss decisions and approach :) 
