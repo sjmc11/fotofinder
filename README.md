@@ -23,3 +23,5 @@ Enjoyed working on this, was cool little hackathon project for a Sunday. Thanks 
 - Ideally use a separate component for pagination that utilised prop/emits
 
 - Search function added to PhotoService http handler
+
+- Sure I'm forgetting plenty, be happy to walk-through and discuss decisions and approach :) 
