@@ -25,8 +25,8 @@
           <div id="actions" class="mt-2 md:mt-0">
             <!-- Use v-if/else for fav buttons as doing an inline dynamic class will be a bit un-readable -->
             <button type="button" class="rounded-md bg-zinc-800/50 md:ml-4 py-3 px-6 border border-zinc-700 hover:text-cyan-500 trans hover:border-cyan-900/50" title="Back to photos" @click="handleBack()">←</button>
-            <button type="button" v-if="isFav($route.params.id)" class="rounded-md bg-red-900/10 hover:bg-zinc-800/50 ml-4 py-3 px-6 border border-red-700/25 text-red-500 trans hover:text-white hover:border-zinc-700" @click="handleToggleFavourite(photo.id)">Unfavourite ♥</button>
-            <button type="button" v-else class="rounded-md bg-zinc-800/50 ml-4 py-3 px-6 border border-zinc-700 hover:text-red-500 trans hover:border-red-900/50" @click="handleToggleFavourite(photo.id)">Favourite ♥</button>
+            <button type="button" v-if="isFav($route.params.id)" class="rounded-md bg-red-900/10 hover:bg-zinc-800/50 ml-4 py-3 px-6 border border-red-700/25 text-red-500 trans hover:text-white hover:border-zinc-700" @click="handleToggleFavourite(photo)">Unfavourite ♥</button>
+            <button type="button" v-else class="rounded-md bg-zinc-800/50 ml-4 py-3 px-6 border border-zinc-700 hover:text-red-500 trans hover:border-red-900/50" @click="handleToggleFavourite(photo)">Favourite ♥</button>
           </div><!-- end action buttons -->
         </PageHeading>
         <div class="sm:grid grid-cols-12 gap-x-4 xl:gap-x-12 fadeInDown">

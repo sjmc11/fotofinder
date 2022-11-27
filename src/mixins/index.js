@@ -14,16 +14,16 @@ const customFuncs = {
      * Implemented as a global mixin for re-usability and scope of Vue context for reactivity.
      * @param photoId
      */
-    handleToggleFavourite (photoId) {
+    handleToggleFavourite (photo) {
       // Re-using the approach from authSubmit in which localstorage & vue data is kept in sync
       // Determine if photo already favourited - don't use .includes() as need the index anyway for un-favouriting
-      const existsIndex = this.$root.favList.indexOf(photoId)
+      const existsIndex = this.$root.favList.indexOf(photo.id)
       if (existsIndex >= 0) {
         // remove
         this.$root.favList.splice(existsIndex, 1)
       } else {
         // add
-        this.$root.favList.push(photoId)
+        this.$root.favList.push(photo.id)
       }
       // Overwrite the localstorage record - no need to re-compute anything
       localStorage.setItem('fav_list', (this.$root.favList).join(','))

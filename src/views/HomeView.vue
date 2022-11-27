@@ -89,14 +89,15 @@ export default {
   },
   watch: {
     $route: {
-      handler: function (search) {
-        if (!this.isFavourites) this.fetchPhotos()
-        console.log(search)
+      handler: function () {
+        this.searchTerm = ''
+        this.activeSearchTerm = ''
+        this.fetchPhotos()
       }
     }
   },
   created () {
-    if (!this.isFavourites) this.fetchGenericPhotos() // no need to fetch if viewing faves
+    this.fetchPhotos()
   },
   methods: {
     // Handle pagination change
@@ -112,7 +113,9 @@ export default {
       this.fetchPhotos()
     },
     fetchPhotos () {
-      if (this.searchTerm) {
+      if (this.isFavourites) {
+        this.fetchFavPhotos()
+      } else if (this.searchTerm) {
         this.fetchPhotoSearchResults()
       } else {
         this.fetchGenericPhotos()
@@ -139,6 +142,24 @@ export default {
           this.photoListAxios = false
           console.error(err)
         })
+    },
+    // Loop favList & fetch - Network heavy approach but most reliable
+    fetchFavPhotos () {
+      this.photoListAxios = true
+      this.photoListErr = ''
+      this.photoList = [];
+      (this.$root.favList).forEach((photoId) => {
+        PhotoService.get(photoId, { client_id: this.$root.client_id })
+          .then(res => {
+            this.photoList.push(res.data)
+            this.photoListAxios = false
+          })
+          .catch((err) => {
+            this.photoErr = err
+            this.doingAxios = false
+            console.error(err)
+          })
+      })
     },
     // Fetch photo search results
     fetchPhotoSearchResults () {
@@ -169,20 +190,12 @@ export default {
     },
     computedPhotoList () {
       if (this.isFavourites) {
-        return this.favPhotos
+        return this.photoList.filter((p) => {
+          return this.$root.favList.includes(p.id)
+        })
       } else {
         return this.photoList
       }
-    },
-    favPhotos () {
-      // Re-create unsplash object structure so that <PhotoList> can be re-used
-      return this.$root.favList.map((photoId) => {
-        return {
-          id: photoId,
-          src: 'https://source.unsplash.com/' + photoId + '/600',
-          alt: 'Image id: ' + photoId
-        }
-      })
     },
     computedSubtitle () {
       switch (true) {
