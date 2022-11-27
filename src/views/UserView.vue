@@ -19,7 +19,6 @@
         <!-- Pagination (could/should go inside of Photo List wrapper component as a component itself and use props/emit approach for re-usability)-->
         <template v-if="pagination.total_results"><!-- show if not favourites view -->
           <p class="text-xs opacity-50 text-center mt-14">Showing {{((pagination.page * pagination.per_page) - pagination.per_page + 1).toLocaleString()}} - {{((pagination.page * pagination.per_page) - pagination.per_page + photos.length).toLocaleString()}} of {{kFormat(pagination.total_results)}} results</p>
-          <p class="block">{{pagination.page}}</p>
           <div id="pagination" class="flex items-center justify-center gap-x-2 mt-3">
             <!-- back -->
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === 1}" @click="handlePageUpdate(pagination.page - 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">←</button>
