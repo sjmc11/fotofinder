@@ -23,11 +23,11 @@
             <!-- back -->
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === 1}" @click="handlePageUpdate(pagination.page - 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">←</button>
             <!-- first -->
-            <button type="button" v-if="pagination.page > 5" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">...</button>
+            <button type="button" v-if="pagination.page > 5" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
             <!-- dynamic range -->
-            <button v-for="p in computedPagination" type="button" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : p === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">{{p.toLocaleString()}}</button>
+            <button v-for="p in computedPagination" type="button" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : p === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">{{p.toLocaleString()}}</button>
             <!-- last -->
-            <button type="button" v-if="pagination.page !== totalPageCount" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">...</button>
+            <button type="button" v-if="pagination.page !== totalPageCount" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
             <!-- next -->
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === totalPageCount}" @click="handlePageUpdate(pagination.page + 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">→</button>
           </div><!-- end pagination -->
@@ -57,7 +57,7 @@ export default {
     return {
       photoAxios: true,
       photos: [],
-      photosErr: [],
+      photosErr: '',
       pagination: {
         page: 1,
         per_page: 20,
@@ -73,12 +73,17 @@ export default {
   methods: {
     // Fetch user photos
     fetchUserPhotos () {
-      this.photoListAxios = true
-      UserService.listPhotos(this.$route.params.username, { client_id: this.$root.client_id })
+      this.photoAxios = true
+      UserService.listPhotos(this.$route.params.username, {
+        client_id: this.$root.client_id,
+        page: this.pagination.page,
+        per_page: this.pagination.per_page,
+        order_by: this.pagination.order_by
+      })
         .then(res => {
           this.photos = res.data
           this.pagination.total_results = res.headers['x-total'] ? res.headers['x-total'] : 0
-          this.photoListAxios = false
+          this.photoAxios = false
         })
         .catch((err) => {
           this.photosErr = err

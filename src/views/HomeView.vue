@@ -3,17 +3,19 @@
       <!-- Page heading -->
       <PageHeading :title="isFavourites ? 'Favourite photos' : 'Photos'" :subTitle="computedSubtitle">
         <template v-if="!isFavourites">
-          <input type="search" v-model="searchTerm" @change="handleFilter" placeholder="Search photos" class="ml-3 lg:ml-5 border border-zinc-700 bg-zinc-800/50 rounded-md w-80 h-9 px-4 text-xs focus:outline-none fadeInDown">
-          <div id="per-page" class="inline-flex items-center ml-3 border border-zinc-700 bg-zinc-800/50 rounded-md text-xs h-9 relative fadeInDown">
-            <span class="inline-block px-3 opacity-50">Per page</span>
-            <select @change="handleFilter" v-model="pagination.per_page" class="px-3 appearance-none w-20 h-9 border-l border-zinc-700 focus:outline-none bg-transparent">
-              <option>10</option>
-              <option>20</option>
-              <option>50</option>
-              <option>100</option>
-            </select>
-            <span class="mr-3 absolute pointer-events-none right-1 text-lg opacity-50" style="top: -2px">⌄</span>
-          </div><!-- end per page -->
+          <div id="actions" class="block xs:flex mt-2 md:mt-0">
+            <input type="search" v-model="searchTerm" @change="handleFilter" placeholder="Search photos" class="md:ml-3 lg:ml-5 border border-zinc-700 bg-zinc-800/50 rounded-md w-full md:w-80 h-9 px-4 text-xs focus:outline-none fadeInDown mb-2 xs:mb-0">
+            <div id="per-page" class="inline-flex items-center xs:ml-3 border border-zinc-700 bg-zinc-800/50 rounded-md text-xs h-9 relative fadeInDown">
+              <span class="inline-block px-3 opacity-50 whitespace-nowrap xs:text-pink-500">Per page</span>
+              <select @change="handleFilter" v-model="pagination.per_page" class="px-3 appearance-none w-20 h-9 border-l border-zinc-700 focus:outline-none bg-transparent">
+                <option>10</option>
+                <option>20</option>
+                <option>50</option>
+                <option>100</option>
+              </select>
+              <span class="mr-3 absolute pointer-events-none right-1 text-lg opacity-50" style="top: -2px">⌄</span>
+            </div><!-- end per page -->
+          </div>
         </template>
       </PageHeading>
       <!-- Loader -->
@@ -38,11 +40,11 @@
             <!-- back -->
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === 1}" @click="handlePageUpdate(pagination.page - 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">←</button>
             <!-- first -->
-            <button type="button" v-if="pagination.page > 5" @click="handlePageUpdate(1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">...</button>
+            <button type="button" v-if="pagination.page > 5" @click="handlePageUpdate(1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
             <!-- dynamic range -->
-            <button v-for="p in computedPagination" type="button" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : p === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">{{p.toLocaleString()}}</button>
+            <button v-for="p in computedPagination" type="button" @click="handlePageUpdate(p)" :key="'pagBtn'+p" :class="{'text-cyan-500 border-cyan-700 bg-cyan-900/10' : p === pagination.page}" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">{{p.toLocaleString()}}</button>
             <!-- last -->
-            <button type="button" v-if="pagination.page !== totalPageCount" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">...</button>
+            <button type="button" v-if="pagination.page !== totalPageCount" @click="handlePageUpdate(totalPageCount)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1 hidden md:inline-block">...</button>
             <!-- next -->
             <button type="button" :class="{'pointer-events-none opacity-25' : pagination.page === totalPageCount}" @click="handlePageUpdate(pagination.page + 1)" class="bg-zinc-800/50 rounded-md border border-zinc-700 px-2 py-1">→</button>
           </div><!-- end pagination -->
