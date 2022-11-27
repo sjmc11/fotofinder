@@ -83,7 +83,14 @@ export default {
       }
     }
   },
-
+  watch: {
+    $route: {
+      handler: function (search) {
+        if (!this.isFavourites) this.fetchPhotos()
+        console.log(search)
+      }
+    }
+  },
   created () {
     if (!this.isFavourites) this.fetchGenericPhotos() // no need to fetch if viewing faves
   },

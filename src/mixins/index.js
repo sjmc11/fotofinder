@@ -4,7 +4,7 @@ const customFuncs = {
   data: function () {
     return {
       get moment () {
-        return moment
+        return moment // Make moment globally available
       }
     }
   },
