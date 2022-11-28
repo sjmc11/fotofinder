@@ -145,6 +145,11 @@ export default {
     },
     // Loop favList & fetch - Network heavy approach but most reliable
     fetchFavPhotos () {
+      if (!this.$root.favList.length) {
+        this.photoListAxios = false
+        return
+      }
+      console.log('fetch faves')
       this.photoListAxios = true
       this.photoListErr = ''
       this.photoList = [];
@@ -156,7 +161,7 @@ export default {
           })
           .catch((err) => {
             this.photoErr = err
-            this.doingAxios = false
+            this.photoListAxios = false
             console.error(err)
           })
       })
